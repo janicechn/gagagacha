@@ -30,13 +30,14 @@ public class Player {
         return balance;
     }
 
+    // REQUIRES: i > 0
     // MODIFIES: this
     // EFFECTS: adds coins in player's balance
     public void addBalance(int i) {
         balance = balance + i;
     }
 
-    // REQUIRES: balance >= i
+    // REQUIRES: balance >= i, i > 0
     // MODIFIES: this
     // EFFECTS: removes coins from player's balance
     public void removeBalance(int i) {

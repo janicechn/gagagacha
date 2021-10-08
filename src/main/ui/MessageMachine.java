@@ -1,4 +1,7 @@
-package model;
+package ui;
+
+import model.Player;
+import ui.GachaMachine;
 
 import java.util.ArrayList;
 import java.util.Collections;

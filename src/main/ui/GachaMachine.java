@@ -1,4 +1,6 @@
-package model;
+package ui;
+
+import model.Player;
 
 import java.util.List;
 import java.util.Random;
@@ -26,8 +28,10 @@ public class GachaMachine {
             if (command.equals("p")) {
                 playMachine(player, price, notes);
                 System.out.println("\nThank you for playing!");
+            } else if (command.equals("q")) {
+                System.out.println("Thank you, come back again!");
             } else {
-                System.out.println("Thank you! Come back again!");
+                System.out.println("Oops! Invalid input, try again!");
             }
         }
     }

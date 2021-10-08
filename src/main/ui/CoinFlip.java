@@ -1,4 +1,6 @@
-package model;
+package ui;
+
+import model.Player;
 
 import java.util.*;
 
