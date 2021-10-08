@@ -18,7 +18,7 @@ class PlayerTest {
     }
 
     @Test
-    void testNotebook() {
+    void testAddNotebook() {
         List<String> notebook = new ArrayList<>();
         assertEquals(notebook, player.getNotebook());
         notebook.add("message");
@@ -26,6 +26,24 @@ class PlayerTest {
         assertEquals(notebook, player.getNotebook());
         notebook.add("advice");
         player.addNotebook("advice");
+        assertEquals(notebook, player.getNotebook());
+    }
+
+    @Test
+    void testAddNotebookWithoutReplicates() {
+        List<String> notebook = new ArrayList<>();
+        assertEquals(notebook, player.getNotebook());
+        player.addNotebookWithoutReplicates("message");
+        notebook.add("message");
+        assertEquals(notebook, player.getNotebook());
+        player.addNotebookWithoutReplicates("message");
+        assertEquals(notebook, player.getNotebook());
+        player.addNotebookWithoutReplicates("advice");
+        notebook.add("advice");
+        assertEquals(notebook, player.getNotebook());
+        player.addNotebookWithoutReplicates("message");
+        assertEquals(notebook, player.getNotebook());
+        player.addNotebookWithoutReplicates("advice");
         assertEquals(notebook, player.getNotebook());
     }
 

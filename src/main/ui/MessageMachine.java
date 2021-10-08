@@ -6,6 +6,7 @@ import ui.GachaMachine;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /*
  * MessageMachine is a class that plays a GachaMachine with the price and message notes pertaining to the
@@ -40,5 +41,22 @@ public class MessageMachine extends GachaMachine {
     // EFFECTS: lets player play gacha machine with note possibilities being specific to the message machine
     public MessageMachine(Player player) {
         super(welcome, player, COST_TO_PLAY, message);
+    }
+
+    // MODIFIES: player
+    // EFFECTS: message machine is played and replicated draws are not added into the notebook
+    void playMachine(Player player, int price, List<String> list) {
+        if (player.getBalance() >= price) {
+            player.removeBalance(price);
+            System.out.println("Spinning gacha machine...");
+            System.out.println("A capsule came out! Read your note:");
+            Random rand = new Random();
+            String note = list.get(rand.nextInt(list.size()));
+            System.out.println("\n\t" + note);
+            player.addNotebookWithoutReplicates(note);
+            System.out.println("Note already present in your notebook, so it is not added!");
+        } else {
+            System.out.println("Sorry, you don't have enough coins to play! Go earn some coins playing mini-games!");
+        }
     }
 }

@@ -49,4 +49,12 @@ public class Player {
     public void addNotebook(String s) {
         notebook.add(s);
     }
+
+    // MODIFIES: this
+    // EFFECTS: adds to player's notebook if not already there; otherwise do not add
+    public void addNotebookWithoutReplicates(String s) {
+        if (!notebook.contains(s)) {
+            notebook.add(s);
+        }
+    }
 }

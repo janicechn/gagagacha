@@ -21,6 +21,8 @@ public class MathQuestion {
                 });
     }
 
+    private int number1;
+    private int number2;
     private int mathAnswer;                    // Answer to the math question
 
     // MODIFIES: player
@@ -76,8 +78,8 @@ public class MathQuestion {
     // EFFECTS: chooses two random numbers between 1 and 100, and the mathAnswer will be the sum.
     //          Returns the addition question of the numbers and operator as a string
     public void addition() {
-        int number1 = (int)(Math.random() * 100) + 1;
-        int number2 = (int)(Math.random() * 100) + 1;
+        number1 = (int)(Math.random() * 100) + 1;
+        number2 = (int)(Math.random() * 100) + 1;
         mathAnswer = number1 + number2;
         System.out.println("\tSolve: " + number1 + " + " + number2);
     }
@@ -85,8 +87,8 @@ public class MathQuestion {
     // EFFECTS: chooses two random numbers between 1 and 100, and the mathAnswer will be the difference.
     //          Returns the subtraction question of the numbers and operator as a string
     public void subtraction() {
-        int number1 = (int)(Math.random() * 100) + 1;
-        int number2 = (int)(Math.random() * 100) + 1;
+        number1 = (int)(Math.random() * 100) + 1;
+        number2 = (int)(Math.random() * 100) + 1;
         mathAnswer = number1 - number2;
         System.out.println("\tSolve: " + number1 + " - " + number2);
     }
@@ -94,8 +96,8 @@ public class MathQuestion {
     // EFFECTS: chooses two random numbers between 1 and 10, and the mathAnswer will be the product.
     //          Returns the multiplication question of the numbers and operator as a string
     public void multiplication() {
-        int number1 = (int)(Math.random() * 10) + 1;
-        int number2 = (int)(Math.random() * 10) + 1;
+        number1 = (int)(Math.random() * 10) + 1;
+        number2 = (int)(Math.random() * 10) + 1;
         mathAnswer = number1 * number2;
         System.out.println("\tSolve: " + number1 + " * " + number2);
     }
