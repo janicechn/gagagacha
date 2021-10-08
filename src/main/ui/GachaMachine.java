@@ -7,11 +7,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 /*
- * GachaMachine is a class that contains all the elements of a gacha machine. It prompts the user to play, indicating
- * the price of the respective machine, and allows the player to play if they have enough coins based on the price. It
- * generates a random note from the respective machine and adds the note into the player's notebook
+ * GachaMachine is an abstract class that contains the general elements and messages of all gacha machines.
+ * It prompts the user to play, indicating the price of the respective machine, and allows the player to play if
+ * they have enough coins based on price while removing amount from the player's balance.
+ * It generates a random note from the respective machine and adds the note into the player's notebook.
  */
-public class GachaMachine {
+public abstract class GachaMachine {
 
     // EFFECTS: prompts user to play a machine or go back to the main menu
     public GachaMachine(String gachaNote, Player player, int price, List<String> notes) {

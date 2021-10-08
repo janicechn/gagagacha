@@ -13,7 +13,9 @@ public class GachaApp {
 
     // EFFECTS: runs gacha application
     public GachaApp() {
-        System.out.println("Welcome to CATCHAGACHA/GAGAGACHA!");
+        System.out.println("Welcome to GAGAGACHA!");
+        System.out.println("\tYou start off with 10 coins, which you can use to play gacha machines and earn notes!"
+                + "\n\tYou can play mini-games to earn more coins. Let's get playing!");
         runArcade();
     }
 
@@ -73,9 +75,9 @@ public class GachaApp {
     private void displayMenu() {
         System.out.println("\nMenu:");
         System.out.println("\t1 -> Play a gacha machine");
-        System.out.println("\t2 -> Play a mini game");
+        System.out.println("\t2 -> Play a mini-game");
         System.out.println("\t3 -> Check coin balance");
-        System.out.println("\t4 -> Check gachacatcha notebook");
+        System.out.println("\t4 -> Check your gacha notebook");
         System.out.println("\tq -> Exit");
     }
 
@@ -108,7 +110,7 @@ public class GachaApp {
         String selection = "";  // force entry into loop
 
         while (!(selection.equals("1") || selection.equals("2"))) {
-            System.out.println("\nWhich game do you want to play?");
+            System.out.println("\nWhich mini-game do you want to play?");
             System.out.println("\t1 -> Coin of truth");
             System.out.println("\t2 -> Mad Math");
             selection = input.next();
@@ -124,7 +126,7 @@ public class GachaApp {
 
     // EFFECTS: gets player's notebook and displays all entries of notes in it, or message if player has no notes
     private void displayNotebook() {
-        System.out.println("\nCheck out the notes in your notebook!");
+        System.out.println("\nCheck out the notes in your gacha notebook!");
 
         if ((player.getNotebook().size()) == 0) {
             System.out.println("\tOops! You don't have any notes right now, play gacha machines to collect notes!");
