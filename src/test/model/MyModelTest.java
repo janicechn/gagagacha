@@ -45,6 +45,9 @@ class PlayerTest {
         assertEquals(notebook, player.getNotebook());
         player.addNotebookWithoutReplicates("advice");
         assertEquals(notebook, player.getNotebook());
+        player.addNotebookWithoutReplicates("fortune");
+        notebook.add("fortune");
+        assertEquals(notebook, player.getNotebook());
     }
 
     @Test
