@@ -126,7 +126,8 @@ public class GachaApp {
 
     // EFFECTS: gets player's notebook and displays all entries of notes in it, or message if player has no notes
     private void displayNotebook() {
-        System.out.println("\nCheck out the notes in your gacha notebook!");
+        System.out.println("\nCheck out the notes in your gacha notebook! "
+                + "Any replicated message notes are not repeated!");
 
         if ((player.getNotebook().size()) == 0) {
             System.out.println("\tOops! You don't have any notes right now, play gacha machines to collect notes!");
