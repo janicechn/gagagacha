@@ -20,12 +20,17 @@ pay real money! You can play fun mini-games for chances to spin!
 - As a user, I want to be able to see a menu of gacha machines and be able to choose one to play.
 - As a user, I want to be able to use my coins to play and spin my chosen gacha machine.
 - As a user, I want to be able to gain notes from spinning a gacha machine, with new notes added into my gacha notebook.
-  - As a user, I want to be able to gain different types of notes from different gacha machine
+  - As a user, I want to be able to gain different types of notes from different gacha machine.
     - As a user, I want to be able to gain advice from the advice machine, fortune from the fortune machine, and 
-      messages from the message machine
+      messages from the message machine.
 - As a user, I want to be able to see a menu of mini-games and be able to choose one to play.
 - As a user, I want to be able to be able to gain coins in my balance by winning a mini-game.
-  - As a user, I want to be able to toss a coin as a mini-games
-    - As a user, I want to be able to choose heads or tails and see a result 
+  - As a user, I want to be able to toss a coin as a mini-games.
+    - As a user, I want to be able to choose heads or tails and see a result.
   - As a user, I want to be able to play math game as a mini-game
-    - As a user, I want to be able to receive a random math question, answer it, and see a result
+    - As a user, I want to be able to receive a random math question, answer it, and see a result.
+- As a user, I want to be able to save my gacha notebook.
+- As a user, I want to be able to be able to load my gacha notebook from file.
+- As a user, when I select the quit option from the application menu, I want to be reminded to save my to-do list to 
+file and have the option to do so or not.
+- As a user, when I start the application, I want to be given the option to load my to-do list from file.
