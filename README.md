@@ -31,6 +31,3 @@ pay real money! You can play fun mini-games for chances to spin!
     - As a user, I want to be able to receive a random math question, answer it, and see a result.
 - As a user, I want to be able to save my gacha notebook.
 - As a user, I want to be able to be able to load my gacha notebook from file.
-- As a user, when I select the quit option from the application menu, I want to be reminded to save my to-do list to 
-file and have the option to do so or not.
-- As a user, when I start the application, I want to be given the option to load my to-do list from file.

@@ -161,7 +161,7 @@ public class GachaApp {
             jsonWriter.open(); //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
             jsonWriter.write(player);
             jsonWriter.close();
-            System.out.println("Congrats! Saved " + player.getName() + " data to " + JSON_STORE);
+            System.out.println("Congrats! Saved " + player.getName() + "'s data to " + JSON_STORE);
         } catch (FileNotFoundException e) { //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
             System.out.println("Sorry, failed to write to file: " + JSON_STORE);
         }
