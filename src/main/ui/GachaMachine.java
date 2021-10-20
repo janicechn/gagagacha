@@ -17,16 +17,16 @@ public abstract class GachaMachine {
     // EFFECTS: prompts user to play a machine or go back to the main menu
     public GachaMachine(String gachaNote, Player player, int price, List<String> notes) {
         Scanner input = new Scanner(System.in);
-        String command = "";  // force entry into loop
+        String command = "";
 
         welcomeMessage(gachaNote, price);
-        while (!(command.equals("p") || command.equals("q"))) {
+        while (!(command.equals("p") || command.equals("q"))) { //https://github.students.cs.ubc.ca/CPSC210/TellerApp
             System.out.println("\tTo play, press p");
             System.out.println("\tTo go back to the menu, press q");
             command = input.nextLine();
-            command = command.toLowerCase();
+            command = command.toLowerCase(); //https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
-            if (command.equals("p")) {
+            if (command.equals("p")) { //https://github.students.cs.ubc.ca/CPSC210/TellerApp
                 playMachine(player, price, notes);
                 System.out.println("\nThank you for playing!");
             } else if (command.equals("q")) {
@@ -55,6 +55,7 @@ public abstract class GachaMachine {
             System.out.println("Spinning gacha machine...");
             System.out.println("A capsule came out! Read your note:");
             Random rand = new Random();
+            // https://www.geeksforgeeks.org/randomly-select-items-from-a-list-in-java/
             String note = list.get(rand.nextInt(list.size()));
             System.out.println("\n\t" + note);
             player.addNotebook(note);

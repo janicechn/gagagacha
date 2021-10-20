@@ -14,7 +14,7 @@ class PlayerTest {
 
     @BeforeEach
     void runBefore() {
-        player = new Player(3);
+        player = new Player("name", 3);
     }
 
     @Test

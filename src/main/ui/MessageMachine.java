@@ -9,7 +9,7 @@ import java.util.Random;
 
 /*
  * MessageMachine is a class that plays a GachaMachine with the price and message notes pertaining to the
- * MessageMachine.
+ * MessageMachine. Note is not added if it already exists in the player's notebook.
  */
 public class MessageMachine extends GachaMachine {
     public static final int COST_TO_PLAY = 5;      // Cost to play machine
@@ -50,6 +50,7 @@ public class MessageMachine extends GachaMachine {
             System.out.println("Spinning gacha machine...");
             System.out.println("A capsule came out! Read your note:");
             Random rand = new Random();
+            // https://www.geeksforgeeks.org/randomly-select-items-from-a-list-in-java/
             String note = list.get(rand.nextInt(list.size()));
             System.out.println("\n\t" + note);
             player.addNotebookWithoutReplicates(note);

@@ -9,7 +9,7 @@
 - Earn as many notes as you can to add into your **gacha notebook**!
 
 **GAGAGACHA** is a game for *anyone* of *any age* to have **fun**! Play mini-games and spin gacha machines 
-to win a variety of notes in your gachacatcha notebook! Just like the gacha machines we love to spin at malls or 
+to win a variety of notes in your gacha notebook! Just like the gacha machines we love to spin at malls or 
 arcades, GAGAGACHA is an online gacha machine arcade that allows you to collect notes! We all love 
 to spin and get fun stuff from gacha machine, so with GAGAGACHA, you can play and collect without having to
 pay real money! You can play fun mini-games for chances to spin!

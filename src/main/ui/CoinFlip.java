@@ -15,16 +15,17 @@ public class CoinFlip {
     //          determines if coin tossed result will match; if matched, player wins 3 coins, otherwise no coins
     public CoinFlip(Player player) {
         Scanner input = new Scanner(System.in);
-        String selection = "";  // force entry into loop
+        String selection = "";  //https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
         System.out.println("Let's play heads or tails! Choose:");
+        //https://github.students.cs.ubc.ca/CPSC210/TellerApp
         while (!(selection.equals("h") || selection.equals("t"))) {
             System.out.println("\th -> heads");
             System.out.println("\tt -> tails");
             selection = input.nextLine();
-            selection = selection.toLowerCase();
+            selection = selection.toLowerCase(); //https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
-            if (selection.equals("h")) {
+            if (selection.equals("h")) { //https://github.students.cs.ubc.ca/CPSC210/TellerApp
                 betHeads(player);
             } else if (selection.equals("t")) {
                 betTails(player);
@@ -78,6 +79,7 @@ public class CoinFlip {
         Random rand = new Random();
         List<String> list = Arrays.asList("heads", "tails");
         System.out.println("Coin is tossed!");
+        // https://www.geeksforgeeks.org/randomly-select-items-from-a-list-in-java/
         return list.get(rand.nextInt(list.size()));
     }
 }

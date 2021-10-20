@@ -1,12 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * Player is the class that contains the player's balance and notebook and methods to add/remove to them
- */
-public class Player {
+// Player is the class that contains the player's balance and notebook and methods to add/remove to them
+public class Player implements Writable {
+    private String name;                  // the player's name
     private List<String> notebook;        // the player's collection
     private int balance;                  // the current coin balance of the player
 
@@ -15,9 +18,15 @@ public class Player {
      *          if initialBalance >= 0 then player's coin balance is set to
      *          initialBalance, otherwise balance is zero.
      */
-    public Player(int initialBalance) {
+    public Player(String name, int initialBalance) {
+        this.name = name;
         notebook = new ArrayList<>();
         balance = initialBalance;
+    }
+
+    // EFFECTS: returns player's name
+    public String getName() {
+        return name;
     }
 
     // EFFECTS: returns player's notebook
@@ -56,5 +65,25 @@ public class Player {
         if (!notebook.contains(s)) {
             notebook.add(s);
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name); //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+        json.put("balance", balance);
+        json.put("notebook", notesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns notes in player as a JSON array
+    private JSONArray notesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (String note : notebook) {
+            jsonArray.put(note); //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+        }
+
+        return jsonArray; //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
     }
 }
