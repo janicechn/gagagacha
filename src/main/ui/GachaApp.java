@@ -23,7 +23,7 @@ public class GachaApp {
         input = new Scanner(System.in); //https://www.w3schools.com/java/java_user_input.asp
 
         System.out.println("Welcome to GAGAGACHA!");
-        System.out.println("\tYou start off with 10 coins, which you can use to play gacha machines and earn notes!"
+        System.out.println("\tNew players start off with 10 coins which can use to play gacha machines and earn notes!"
                 + "\n\tYou can play mini-games to earn more coins. Let's get playing!");
         System.out.println("\nFirst, tell us your name! If you have a file of your player data, "
                 + "you can enter anything and load your data in the menu after.");
@@ -93,8 +93,8 @@ public class GachaApp {
         System.out.println("\t2 -> Play a mini-game");
         System.out.println("\t3 -> Check coin balance");
         System.out.println("\t4 -> Check your gacha notebook");
-        System.out.println("\ts -> Save your player data to file");
-        System.out.println("\tl -> Load your player data from file");
+        System.out.println("\ts -> Save your player data to file (saves current data)");
+        System.out.println("\tl -> Load your player data from file (replaces current data)");
         System.out.println("\tq -> Exit");
     }
 
