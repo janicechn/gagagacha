@@ -40,21 +40,21 @@ public class MessageMachine extends GachaMachine {
     // EFFECTS: lets player play gacha machine with note possibilities being specific to the message machine
     public MessageMachine(Player player) {
         super(welcome, player, COST_TO_PLAY, message);
+        playMachine(player);
     }
 
     // MODIFIES: player
     // EFFECTS: message machine is played and replicated draws are not added into the notebook
-    void playMachine(Player player, int price, List<String> list) {
-        if (player.getBalance() >= price) {
-            player.removeBalance(price);
+    void playMachine(Player player) {
+        if (player.getBalance() >= COST_TO_PLAY) {
+            player.removeBalance(COST_TO_PLAY);
             System.out.println("Spinning gacha machine...");
             System.out.println("A capsule came out! Read your note:");
             Random rand = new Random();
             // https://www.geeksforgeeks.org/randomly-select-items-from-a-list-in-java/
-            String note = list.get(rand.nextInt(list.size()));
+            String note = message.get(rand.nextInt(message.size()));
             System.out.println("\n\t" + note);
             player.addNotebookWithoutReplicates(note);
-            System.out.println("Note already present in your notebook, so it is not added!");
         } else {
             System.out.println("Sorry, you don't have enough coins to play! Go earn some coins playing mini-games!");
         }

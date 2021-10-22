@@ -1,13 +1,10 @@
 package persistence;
 
 import model.Player;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +13,7 @@ public class JsonReaderTest {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
-            Player player = reader.read();
+            reader.read();
             fail("IOException expected"); //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
         } catch (IOException e) { //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
             // pass
