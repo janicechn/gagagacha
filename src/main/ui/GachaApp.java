@@ -152,12 +152,12 @@ public class GachaApp {
         }
 
         for (int i = 0; i < player.getNotebook().size(); i++) {
-            System.out.println("\t" + player.getNotebook().get(i));
+            System.out.println("\t" + (i+1) + ". " + player.getNotebook().get(i));
         }
 
         String selection = ""; //https://github.students.cs.ubc.ca/CPSC210/TellerApp
         while(!(selection.equals("1") || selection.equals("2") || selection.equals("q"))) {
-            System.out.println("Options:" + "\n\t1 -> remove a note" + "\n\t2 -> remove all notes"
+            System.out.println("\nOptions:" + "\n\t1 -> remove a note" + "\n\t2 -> remove all notes"
                     + "\n\tq -> back to main menu");
             selection = input.next();
             selection = selection.toLowerCase(); //https://github.students.cs.ubc.ca/CPSC210/TellerApp
@@ -168,24 +168,21 @@ public class GachaApp {
         } else if (selection.equals("2")) {
             player.removeAllNotes();
             System.out.println("Gacha notebook cleared.");
-        } else {
-            // main menu
-        }
+        } // returns to main menu (else)
     }
 
     // MODIFIES: player
     // EFFECTS: prompts user to enter note that they want to remove and removes it from player notebook if it is there
     private void removeInNotebook() {
-        String note;
-        System.out.println("Enter the note that you want to delete (uppercase letters and punctuation sensitive)");
-        note = input.next();
+        int selection;
+        System.out.println("Enter the entry number of the note that you want to delete");
+        selection = Integer.parseInt(input.next());
 
-        if(player.getNotebook().contains(note)) {
-            for(int i = 0; i < player.getNotebook().size(); i++) {
-                if (player.getNotebook().get(i).equals(note)) {
-                    player.removeNote(i);
-                }
-            }
+        if(selection < player.getNotebook().size() && selection > 0) {
+            player.removeNote(selection-1);
+            System.out.println("Note " + selection + " has been removed.");
+        } else {
+            System.out.println("Invalid entry number.");
         }
     }
 

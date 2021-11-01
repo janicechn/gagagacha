@@ -38,6 +38,6 @@ public class FortuneMachine extends GachaMachine {
     // MODIFIES: player
     // EFFECTS: lets player play gacha machine with note possibilities being specific to the fortune machine
     public FortuneMachine(Player player) {
-        super(welcome, player, COST_TO_PLAY, fortune);
+        super(welcome, player, COST_TO_PLAY, fortune, true);
     }
 }

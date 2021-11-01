@@ -15,7 +15,7 @@ import java.util.Scanner;
 public abstract class GachaMachine {
 
     // EFFECTS: prompts user to play a machine or go back to the main menu
-    public GachaMachine(String gachaNote, Player player, int price, List<String> notes) {
+    public GachaMachine(String gachaNote, Player player, int price, List<String> notes, Boolean replicates) {
         Scanner input = new Scanner(System.in);
         String command = "";
 
@@ -27,7 +27,7 @@ public abstract class GachaMachine {
             command = command.toLowerCase(); //https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
             if (command.equals("p")) { //https://github.students.cs.ubc.ca/CPSC210/TellerApp
-                playMachine(player, price, notes);
+                playMachine(player, price, notes, replicates);
                 System.out.println("\nThank you for playing!");
             } else if (command.equals("q")) {
                 System.out.println("Thank you, come back again!");
@@ -47,9 +47,11 @@ public abstract class GachaMachine {
     /*
      * EFFECT: if player's balance has enough coins to pay, remove price to play machine from player's balance,
      *         then randomly prints note from the machine which is added into the player's notebook; otherwise print
-     *         message indicating player has insufficient coins to play
+     *         message indicating player has insufficient coins to play.
+     *         If replicates is true, any note will be added to the player's notebook. If replicates is false,
+     *         notes that are already in the player's notebook are not added.
      */
-    private void playMachine(Player player, int price, List<String> list) {
+    private void playMachine(Player player, int price, List<String> list, Boolean replicates) {
         if (player.getBalance() >= price) {
             player.removeBalance(price);
             System.out.println("Spinning gacha machine...");
@@ -58,7 +60,11 @@ public abstract class GachaMachine {
             // https://www.geeksforgeeks.org/randomly-select-items-from-a-list-in-java/
             String note = list.get(rand.nextInt(list.size()));
             System.out.println("\n\t" + note);
-            player.addNotebook(note);
+            if (replicates) {
+                player.addNotebook(note);
+            } else {
+                player.addNotebookWithoutReplicates(note);
+            }
         } else {
             System.out.println("Sorry, you don't have enough coins to play! Go earn some coins playing mini-games!");
         }

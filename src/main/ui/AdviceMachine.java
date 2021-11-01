@@ -38,6 +38,6 @@ public class AdviceMachine extends GachaMachine {
     // MODIFIES: player
     // EFFECTS: lets player play gacha machine with note possibilities being specific to the advice machine
     public AdviceMachine(Player player) {
-        super(welcome, player, COST_TO_PLAY, advice);
+        super(welcome, player, COST_TO_PLAY, advice, true);
     }
 }
