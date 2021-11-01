@@ -18,6 +18,26 @@ class PlayerTest {
     }
 
     @Test
+    void testRemoveNote() {
+        List<String> notebook = new ArrayList<>();
+        assertEquals(notebook, player.getNotebook());
+        notebook.add("message");
+        player.addNotebook("message");
+        assertEquals(notebook, player.getNotebook());
+        notebook.add("advice");
+        player.addNotebook("advice");
+        assertEquals(notebook, player.getNotebook());
+        player.removeNote(0);
+        notebook.remove(0);
+        assertEquals(notebook, player.getNotebook());
+        notebook.add("fortune");
+        player.addNotebook("fortune");
+        assertEquals(notebook, player.getNotebook());
+        player.removeAllNotes();
+        assertEquals(0, player.getNotebook().size());
+    }
+
+    @Test
     void testAddNotebook() {
         List<String> notebook = new ArrayList<>();
         assertEquals(notebook, player.getNotebook());

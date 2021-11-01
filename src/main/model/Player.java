@@ -54,6 +54,18 @@ public class Player implements Writable {
     }
 
     // MODIFIES: this
+    // EFFECTS: removes a note entry in the player's notebook at position i
+    public void removeNote(int i) {
+        notebook.remove(i);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes all note entries in the player's notebook
+    public void removeAllNotes() {
+        notebook = new ArrayList<>();
+    }
+
+    // MODIFIES: this
     // EFFECTS: adds a note (String s) entry into the player's notebook
     public void addNotebook(String s) {
         notebook.add(s);

@@ -25,6 +25,7 @@ public class JsonReaderTest {
         Player samplePlayer = new Player("sample name", 10);
         samplePlayer.addNotebook("message");
         samplePlayer.addNotebook("fortune");
+        samplePlayer.addNotebook("advice");
         samplePlayer.removeBalance(7);
         samplePlayer.addBalance(1);
         //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
@@ -41,9 +42,11 @@ public class JsonReaderTest {
         try {
             Player player = reader.read();
             assertEquals("sample name", player.getName());
-            assertEquals(2, player.getNotebook().size());
+            assertEquals(3, player.getNotebook().size());
             assertEquals("message", player.getNotebook().get(0));
             assertEquals("fortune", player.getNotebook().get(1));
+            assertEquals("advice", player.getNotebook().get(2));
+
             assertEquals(4, player.getBalance());
         } catch (IOException e) {
             fail("Couldn't read from file"); //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git

@@ -26,6 +26,7 @@ public class JsonWriterTest {
             Player player = new Player("name", 10);
             player.addNotebook("message");
             player.addNotebook("fortune");
+            player.addNotebook("advice");
             player.removeBalance(7);
             player.addBalance(1);
             //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
@@ -37,9 +38,10 @@ public class JsonWriterTest {
             JsonReader reader = new JsonReader("./data/testWriterPlayer.json");
             player = reader.read();
             assertEquals("name", player.getName());
-            assertEquals(2, player.getNotebook().size());
+            assertEquals(3, player.getNotebook().size());
             assertEquals("message", player.getNotebook().get(0));
             assertEquals("fortune", player.getNotebook().get(1));
+            assertEquals("advice", player.getNotebook().get(2));
             assertEquals(4, player.getBalance());
         } catch (IOException e) {
             //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
