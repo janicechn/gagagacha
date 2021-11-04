@@ -37,7 +37,8 @@ public class MessageMachine extends GachaMachine {
     }
 
     // MODIFIES: player
-    // EFFECTS: lets player play gacha machine with note possibilities being specific to the message machine
+    // EFFECTS: lets player play gacha machine with note possibilities being specific to the message machine; does not
+    //          add messages to player's notebook if it already exists there.
     public MessageMachine(Player player) {
         super(welcome, player, COST_TO_PLAY, message, false);
     }

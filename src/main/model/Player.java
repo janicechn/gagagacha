@@ -79,6 +79,7 @@ public class Player implements Writable {
         }
     }
 
+    // EFFECTS: creates JSONObject from player
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

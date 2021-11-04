@@ -20,7 +20,7 @@ public class GachaApp {
     // EFFECTS: prints welcome message and intro, then asks for player's name and runs gacha application
     public GachaApp() {
         String entry;
-        input = new Scanner(System.in); //https://www.w3schools.com/java/java_user_input.asp
+        input = new Scanner(System.in);
 
         System.out.println("Welcome to GAGAGACHA!");
         System.out.println("\tNew players start off with 10 coins which can use to play gacha machines and earn notes!"
@@ -38,16 +38,16 @@ public class GachaApp {
     // EFFECTS: initializes player and processes user input prompting the menu unless player quits game
     private void runArcade(String name) {
         boolean keepGoing = true; //https://github.students.cs.ubc.ca/CPSC210/TellerApp
-        String command; //https://www.w3schools.com/java/java_user_input.asp
+        String command;
 
         player = new Player(name, 10);
 
         while (keepGoing) { //https://github.students.cs.ubc.ca/CPSC210/TellerApp
             displayMenu();
-            command = input.next(); //https://www.w3schools.com/java/java_user_input.asp
+            command = input.next();
             command = command.toLowerCase(); //https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
-            if (command.equals("q")) { //https://www.w3schools.com/java/java_user_input.asp
+            if (command.equals("q")) {
                 keepGoing = false;
             } else {
                 performCommand(command);

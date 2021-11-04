@@ -57,7 +57,6 @@ public abstract class GachaMachine {
             System.out.println("Spinning gacha machine...");
             System.out.println("A capsule came out! Read your note:");
             Random rand = new Random();
-            // https://www.geeksforgeeks.org/randomly-select-items-from-a-list-in-java/
             String note = list.get(rand.nextInt(list.size()));
             System.out.println("\n\t" + note);
             if (replicates) {

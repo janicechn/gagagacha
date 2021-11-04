@@ -79,7 +79,6 @@ public class CoinFlip {
         Random rand = new Random();
         List<String> list = Arrays.asList("heads", "tails");
         System.out.println("Coin is tossed!");
-        // https://www.geeksforgeeks.org/randomly-select-items-from-a-list-in-java/
         return list.get(rand.nextInt(list.size()));
     }
 }

@@ -14,9 +14,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class StartScreen {
-    //https://stackoverflow.com/questions/31526190/jframe-with-background-image-and-a-jpanel?noredirect=1&lq=1
-    //https://stackoverflow.com/questions/22162398/how-to-set-a-background-picture-in-jpanel
-
     static Player player;
 
     public StartScreen() {
@@ -27,23 +24,22 @@ public class StartScreen {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.add(new Gui());
+        // open in center of screen
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+        //continue to prompt for name to create player until told to stop (when keepGoing is false)
         boolean keepGoing = true;
-
         while (keepGoing) {
-            // https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
             String s = (String)JOptionPane.showInputDialog(frame,  "Enter your name:\n",
-                    "Create new player", JOptionPane.PLAIN_MESSAGE, null, null, 
+                    "Create new player", JOptionPane.PLAIN_MESSAGE, null, null,
                     "");
-
-            //If a string was returned, say so.
-            //https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+            //stop prompting for player name when a string is entered
             if ((s != null) && (s.length() > 0)) {
                 keepGoing = false;
                 player = new Player(s, 10);
             }
+            //dialog of error message when invalid input/trying to not input a name (close/cancel)
             else {
                 JOptionPane.showMessageDialog(frame,
                         "Oops! Error in entering your player name. Unable to launch game.",
@@ -52,6 +48,7 @@ public class StartScreen {
         }
     }
 
+    //set panel with background image
     public static class Panel extends JPanel {
 
         BufferedImage image;
@@ -59,18 +56,20 @@ public class StartScreen {
         public Panel() {
             setLayout(new BorderLayout());
             try {
+                //image drawn by me, uploaded using https://imgbb.com/
                 image = ImageIO.read(new URL("https://i.ibb.co/31dnR7d/gagagacha.png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
 
+        //have the size fit the background image
         @Override
         public Dimension getPreferredSize() {
             return image == null ? super.getPreferredSize() : new Dimension(image.getWidth(), image.getHeight());
         }
 
+        //draw background image
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -89,14 +88,11 @@ public class StartScreen {
             CardLayout cardLayout = new CardLayout();
             setLayout(cardLayout);
 
+            //add main menu (4 buttons) onto the frame
             MainMenuPane mainMenuPane = new MainMenuPane();
-
             add(mainMenuPane, "MainMenu");
-
             cardLayout.show(this, "MainMenu");
-
         }
-
     }
 
     public static class MainMenuPane extends JPanel {
@@ -109,11 +105,13 @@ public class StartScreen {
             setLayout(new GridBagLayout());
             setOpaque(false);
 
+            //Add button for play, view, save, load with spaces between
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             JButton playButton = new JButton("Play gacha machine");
             add(playButton, gbc);
             playButton.setMnemonic(KeyEvent.VK_P);
+            //play button shows dialog of random note generated from FortuneMachine and adds it to player's notebook
             playButton.addActionListener(e -> {
                 Random rand = new Random();
                 List<String> fortunes = FortuneMachine.fortune;
@@ -130,6 +128,9 @@ public class StartScreen {
             JButton notebookButton = new JButton("View gacha notebook");
             add(notebookButton, gbc);
             notebookButton.setMnemonic(KeyEvent.VK_N);
+            //if player's notebook is empty, error message shows when acting on the notebook button;
+            //otherwise show notebook in a JList with a new frame and utilizing a scrolling pane;
+            //includes the two function buttons at the bottom
             notebookButton.addActionListener(e -> {
                 if (player.getNotebook().isEmpty()) {
                     JOptionPane.showMessageDialog(null,
@@ -152,20 +153,21 @@ public class StartScreen {
 
                     deleteButton = new JButton("Delete note");
                     deleteButton.setActionCommand("Delete note");
+                    //deleteButton that removes the selected note from the list and the player's data
                     deleteButton.addActionListener(f -> {
-                        //This method can be called only if there's a valid selection
-                        //so go ahead and remove whatever's selected.
+                        //remove note at the selected index in the list and player's data
                         int index = list.getSelectedIndex();
                         model.remove(index);
                         player.removeNote(index);
 
-                        if (model.getSize() == 0) { //Nobody's left, disable deleting.
+                        //disable delete and empty button when no notes left to possibly delete
+                        if (model.getSize() == 0) {
                             deleteButton.setEnabled(false);
                             emptyButton.setEnabled(false);
 
-                        } else { //Select an index.
+                        } else {
+                            //removed item in last position if the index is at the last position
                             if (index == model.getSize()) {
-                                //removed item in last position
                                 index--;
                             }
 
@@ -176,16 +178,16 @@ public class StartScreen {
 
                     emptyButton = new JButton("Empty notebook");
                     emptyButton.setActionCommand("Empty notebook");
+                    //emptyButton removes all notes from player notebook data and resets list model;
+                    //JList frame closes and message dialog appears
                     emptyButton.addActionListener(g -> {
                         model = new DefaultListModel<>();
-                        deleteButton.setEnabled(false);
-                        emptyButton.setEnabled(false);
                         player.removeAllNotes();
-                        list.updateUI();
                         frame.dispose();
                         JOptionPane.showMessageDialog(null, "Your gacha notebook has been cleared.");
                     });
 
+                    //create panel for buttons
                     JPanel buttonPane = new JPanel();
                     buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
                     buttonPane.add(deleteButton);
@@ -195,11 +197,13 @@ public class StartScreen {
                     buttonPane.add(emptyButton);
                     buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
+                    //add listScroller and buttonPane to the frame that comes up when view notebook button acted on
                     frame.setLayout(new BorderLayout());
                     frame.getContentPane().add(listScroller, BorderLayout.CENTER);
                     frame.getContentPane().add(buttonPane, BorderLayout.SOUTH);
-                    frame.setSize(900, 500);
+                    frame.setSize(1200, 500);
                     frame.pack();
+                    //open in center of screen
                     frame.setLocationRelativeTo(null);
                     frame.setVisible(true);
                 }
@@ -208,10 +212,12 @@ public class StartScreen {
             JButton saveButton = new JButton("Save current gacha notebook data");
             add(saveButton, gbc);
             saveButton.setMnemonic(KeyEvent.VK_S);
+            //button acted on will then show dialog saying player's data is saved
             saveButton.addActionListener(e -> {
                 JOptionPane.showMessageDialog(null, player.getName() + " data saved!");
             });
 
+            //button acted on will then show dialog saying player's data is loaded
             JButton loadButton = new JButton("Load gacha notebook data");
             add(loadButton, gbc);
             loadButton.setMnemonic(KeyEvent.VK_L);
@@ -221,7 +227,7 @@ public class StartScreen {
         }
     }
 
-    /** Returns an ImageIcon, or null if the path was invalid. */
+    // Returns ImageIcon or null (if path invalid)
     protected static ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = null;
         try {

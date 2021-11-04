@@ -7,7 +7,7 @@ import java.io.*;
 
 // Represents a writer that writes JSON representation of player (data including name, balance, notebook) to file
 public class JsonWriter {
-    private PrintWriter writer; //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+    private PrintWriter writer;
     private String destination; //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
     // EFFECTS: constructs writer to write to destination file
