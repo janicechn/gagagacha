@@ -1,10 +1,13 @@
 package ui.gui;
 
+import persistence.JsonReader;
 import ui.FortuneMachine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -13,8 +16,6 @@ import java.util.Random;
 import static ui.gui.StartScreen.player;
 
 public class MainMenuPane extends JPanel {
-//    private JButton deleteButton;
-//    private JButton emptyButton;
     DefaultListModel<String> model;
 
     public MainMenuPane() {
@@ -42,7 +43,50 @@ public class MainMenuPane extends JPanel {
         add(saveButton, gbc);
         saveButton.setMnemonic(KeyEvent.VK_S);
         //button acted on will then show dialog saying player's data is saved
-        saveButton.addActionListener(e -> JOptionPane.showMessageDialog(null, player.getName() + " data saved!"));
+        saveButton.addActionListener(e ->
+                JOptionPane.showMessageDialog(null, player.getName() + " data saved!"));
+
+        load(gbc);
+    }
+
+    private void load(GridBagConstraints gbc) {
+        JButton loadButton = new JButton("Load player data");
+        add(loadButton, gbc);
+        loadButton.setMnemonic(KeyEvent.VK_S);
+        //button acted on will then show dialog saying player's data is saved
+        loadButton.addActionListener(e -> {
+            try {
+                loadPlayer();
+            } catch (IOException f) {
+                //dialog of error message when invalid file load
+                JOptionPane.showMessageDialog(null, "Oops! Error in loading player data.",
+                        "Load error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
+
+    private void loadPlayer() throws IOException {
+        JFileChooser fc = new JFileChooser();
+
+        int returnValue = fc.showOpenDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fc.getSelectedFile();
+        } else {
+            throw new IOException();
+        }
+
+        String filename = fc.getSelectedFile().toString();
+        //https://stackoverflow.com/questions/55568338/filechooser-how-to-show-an-error-message-while-saving-
+        // json-file-as-png-or-any
+        if (!filename.endsWith(".json")) {
+            JOptionPane.showMessageDialog(null,
+                    "Failed to load. You should load a file with a .json extension!");
+        } else {
+            JsonReader reader = new JsonReader(fc.getSelectedFile().toString());
+            reader.read();
+            JOptionPane.showMessageDialog(null, player.getName() + " data loaded!");
+        }
     }
 
     private void play() {
@@ -116,6 +160,14 @@ public class MainMenuPane extends JPanel {
         } else {
             System.err.println("Couldn't find file: " + path);
             return null;
+        }
+    }
+
+    private void load(ActionEvent e) {
+        try {
+            loadPlayer();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }
