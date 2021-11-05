@@ -35,6 +35,7 @@ public class MathQuestion {
         question();
         System.out.println("Enter your answer:");
         playerAnswer = input.nextLine(); //https://github.students.cs.ubc.ca/CPSC210/TellerApp
+        // https://www.geeksforgeeks.org/randomly-select-items-from-a-list-in-java/
         int attempt = Integer.parseInt(playerAnswer);
         checkAnswer(attempt, player);
     }
@@ -42,6 +43,7 @@ public class MathQuestion {
     // EFFECTS: generates random operation and makes a math question based on the operation
     public void question() {
         Random rand = new Random();
+        // https://www.geeksforgeeks.org/randomly-select-items-from-a-list-in-java/
         String operation = list.get(rand.nextInt(list.size()));
 
         if (operation.equals("Addition")) {
@@ -78,7 +80,7 @@ public class MathQuestion {
     // EFFECTS: chooses two random numbers between 1 and 100, and the mathAnswer will be the sum.
     //          Returns the addition question of the numbers and operator as a string
     public void addition() {
-        number1 = (int)(Math.random() * 100) + 1;
+        number1 = (int)(Math.random() * 100) + 1; //https://www.javatpoint.com/java-math-random-method
         number2 = (int)(Math.random() * 100) + 1;
         mathAnswer = number1 + number2;
         System.out.println("\tSolve: " + number1 + " + " + number2);

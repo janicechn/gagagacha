@@ -20,7 +20,7 @@ public class GachaApp {
     // EFFECTS: prints welcome message and intro, then asks for player's name and runs gacha application
     public GachaApp() {
         String entry;
-        input = new Scanner(System.in);
+        input = new Scanner(System.in); // https://www.w3schools.com/java/java_user_input.asp
 
         System.out.println("Welcome to GAGAGACHA!");
         System.out.println("\tNew players start off with 10 coins which can use to play gacha machines and earn notes!"
@@ -29,23 +29,23 @@ public class GachaApp {
                 + "you can enter anything and load your data in the menu after.");
         entry = input.next();
 
-        jsonWriter = new JsonWriter(JSON_STORE); //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
-        jsonReader = new JsonReader(JSON_STORE); //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+        jsonWriter = new JsonWriter(JSON_STORE); // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+        jsonReader = new JsonReader(JSON_STORE); // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
         runArcade(entry);
     }
 
     // MODIFIES: this
     // EFFECTS: initializes player and processes user input prompting the menu unless player quits game
     private void runArcade(String name) {
-        boolean keepGoing = true; //https://github.students.cs.ubc.ca/CPSC210/TellerApp
+        boolean keepGoing = true; // https://github.students.cs.ubc.ca/CPSC210/TellerApp
         String command;
 
         player = new Player(name, 10);
 
-        while (keepGoing) { //https://github.students.cs.ubc.ca/CPSC210/TellerApp
+        while (keepGoing) { // https://github.students.cs.ubc.ca/CPSC210/TellerApp
             displayMenu();
             command = input.next();
-            command = command.toLowerCase(); //https://github.students.cs.ubc.ca/CPSC210/TellerApp
+            command = command.toLowerCase(); // https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
             if (command.equals("q")) {
                 keepGoing = false;
@@ -152,11 +152,11 @@ public class GachaApp {
         }
 
         for (int i = 0; i < player.getNotebook().size(); i++) {
-            System.out.println("\t" + (i+1) + ". " + player.getNotebook().get(i));
+            System.out.println("\t" + (i + 1) + ". " + player.getNotebook().get(i));
         }
 
         String selection = ""; //https://github.students.cs.ubc.ca/CPSC210/TellerApp
-        while(!(selection.equals("1") || selection.equals("2") || selection.equals("q"))) {
+        while (!(selection.equals("1") || selection.equals("2") || selection.equals("q"))) {
             System.out.println("\nOptions:" + "\n\t1 -> remove a note" + "\n\t2 -> remove all notes"
                     + "\n\tq -> back to main menu");
             selection = input.next();
@@ -178,7 +178,7 @@ public class GachaApp {
         System.out.println("Enter the entry number of the note that you want to delete");
         selection = Integer.parseInt(input.next());
 
-        if(selection < player.getNotebook().size() && selection > 0) {
+        if (selection < player.getNotebook().size() && selection > 0) {
             player.removeNote(selection-1);
             System.out.println("Note " + selection + " has been removed.");
         } else {

@@ -5,7 +5,6 @@ import model.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 /*
  * MessageMachine is a class that plays a GachaMachine with the price and message notes pertaining to the
