@@ -74,6 +74,7 @@ public class CoinFlip {
         System.out.println("Sorry, looks like luck isn't on your side this time. Try again next time.");
     }
 
+    // MODIFIES: this
     // EFFECTS: tosses coin by randomly choosing between the two and returns the result of what is chosen
     public String toss() {
         Random rand = new Random();

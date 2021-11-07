@@ -5,7 +5,6 @@ import persistence.JsonWriter;
 import ui.FortuneMachine;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
@@ -14,9 +13,11 @@ import java.util.Random;
 
 import static ui.gui.StartScreen.player;
 
+// Main menu components of each button/option the player has
 public class MainMenuPane extends JPanel {
     DefaultListModel<String> model;
 
+    // EFFECTS: Set layout and add buttons
     public MainMenuPane() {
         setLayout(new GridBagLayout());
         setOpaque(false);
@@ -24,31 +25,30 @@ public class MainMenuPane extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
 
+        // Create play button and play() on event of button
         JButton playButton = new JButton("Play gacha machine");
         add(playButton, gbc);
         playButton.setMnemonic(KeyEvent.VK_P);
-        //play button shows dialog of random note generated from FortuneMachine and adds it to player's notebook
         playButton.addActionListener(e -> play());
-
         notebook(gbc);
         save(gbc);
         load(gbc);
     }
 
+    // EFFECTS: create and add notebook button and viewNotebook() when acted on
     private void notebook(GridBagConstraints gbc) {
         JButton notebookButton = new JButton("View gacha notebook");
         add(notebookButton, gbc);
         notebookButton.setMnemonic(KeyEvent.VK_N);
-        //if player's notebook is empty, error message shows, otherwise show notebook in a JList with a new frame and
-        // utilizing a scrolling pane; includes the two function buttons at the bottom
         notebookButton.addActionListener(e -> viewNotebook());
     }
 
+    // EFFECTS: saves current player data when acted on and shows dialog indicating player's data is saved; error
+    //          dialog otherwise.
     private void save(GridBagConstraints gbc) {
         JButton saveButton = new JButton("Save current player data");
         add(saveButton, gbc);
         saveButton.setMnemonic(KeyEvent.VK_S);
-        //button acted on will then show dialog saying player's data is saved
         saveButton.addActionListener(e -> {
             JsonWriter jsonWriter = new JsonWriter("./data/player.json");
             try {
@@ -64,11 +64,12 @@ public class MainMenuPane extends JPanel {
         });
     }
 
+    // MODIFIES: player
+    // EFFECTS: loads player data when acted on and shows dialog that player's data is loaded; error dialog otherwise
     private void load(GridBagConstraints gbc) {
         JButton loadButton = new JButton("Load player data");
         add(loadButton, gbc);
         loadButton.setMnemonic(KeyEvent.VK_S);
-        //button acted on will then show dialog saying player's data is saved
         loadButton.addActionListener(e -> {
             try {
                 JsonReader reader = new JsonReader("./data/player.json");
@@ -81,6 +82,7 @@ public class MainMenuPane extends JPanel {
         });
     }
 
+    // EFFECTS: shows dialog of random note generated from FortuneMachine and adds it to player's notebook
     private void play() {
         Random rand = new Random();
         List<String> fortunes = FortuneMachine.fortune;
@@ -94,6 +96,8 @@ public class MainMenuPane extends JPanel {
                 JOptionPane.INFORMATION_MESSAGE, icon);
     }
 
+    // EFFECTS: if player's notebook is empty, error message shows; otherwise show notebook in a dialog pane with
+    //          function buttons at the bottom to either delete a selected note, or empty notebook completely
     private void viewNotebook() {
         if (player.getNotebook().isEmpty()) {
             JOptionPane.showMessageDialog(null,
@@ -115,26 +119,26 @@ public class MainMenuPane extends JPanel {
         }
     }
 
+    // MODIFIES: player
+    // EFFECTS: deletes selected note in player notebook and on dialog; error dialog shown if no note selected to delete
+    //          and message dialog shown when no more notes left to delete
     private void deleteNote(JList list) {
-        if (list.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Oops! No note selected to delete.",
-                    "Delete note error", JOptionPane.ERROR_MESSAGE);
-        } else {
+        if (list.getSelectedIndex() != -1) {
             //remove note at the selected index in the list and player's data
             int index = list.getSelectedIndex();
             model.remove(index);
             player.removeNote(index);
-            if (list.getSize().equals(0)) {
-                JOptionPane.showMessageDialog(null, "Your gacha notebook is empty.");
-            } else {
-                //removed item in last position if the index is at the last position
-                if (index == model.getSize()) {
-                    index--;
-                }
 
-                list.setSelectedIndex(index);
-                list.ensureIndexIsVisible(index);
+            //removed item in last position if the index is at the last position
+            if (index == model.getSize()) {
+                index--;
             }
+
+            list.setSelectedIndex(index);
+            list.ensureIndexIsVisible(index);
+        } else {
+            JOptionPane.showMessageDialog(null, "Oops! No note selected to delete.",
+                    "Delete note error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -2,20 +2,18 @@ package ui.gui;
 
 import model.Player;
 import persistence.JsonReader;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
+// Overall frame and components of the game app
 public class StartScreen {
     //https://stackoverflow.com/questions/22162398/how-to-set-a-background-picture-in-jpanel
     protected static Player player;
     private JFrame frame;
     Boolean keepGoing = true;
 
+    // EFFECTS: frame of the game made with a background image and having a menu implemented; instantiatePlayer frame
+    //          prompted overtop until told to stop.
     public StartScreen() {
         Panel background = new Panel();
 
@@ -24,9 +22,8 @@ public class StartScreen {
         frame.setContentPane(background);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.add(new Gui());
-        // open in center of screen
-        frame.setLocationRelativeTo(null);
+        frame.add(new MainMenu());
+        frame.setLocationRelativeTo(null); // open in center of screen
         frame.setVisible(true);
 
         while (keepGoing) {
@@ -34,6 +31,8 @@ public class StartScreen {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: Prompts user to either create a player or load a player until player is set; error dialog otherwise
     private void instantiatePlayer(JFrame frame) {
         boolean keepGoingHere = true;
         // https://stackoverflow.com/questions/13334198/java-custom-buttons-in-showinputdialog
@@ -56,23 +55,26 @@ public class StartScreen {
         }
     }
 
+    // MODIFIES: player
+    // EFFECTS: Prompts player to enter name for player and creates new player;
+    //          error message if no player name entered, or if player name is/contains spaces
     private void createPlayerPrompt(JFrame frame) {
         // https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
         String s = (String)JOptionPane.showInputDialog(frame,  "Enter your name:\n",
                 "Create new player", JOptionPane.PLAIN_MESSAGE, null, null,
                 "");
-        //stop prompting for player name when a string is entered
-        if ((s != null) && (s.length() > 0)) {
+        if (!s.contains(" ") && s.length() > 0) {
             keepGoing = false;
             player = new Player(s, 10);
         } else {
-            //dialog of error message when invalid input/trying to not input a name (close/cancel)
             JOptionPane.showMessageDialog(frame,
                     "Oops! Error in entering your player name. Unable to launch game.",
                     "Input error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
+    // MODIFIES: player
+    // EFFECTS: loads player if it exists; error message otherwise
     private void loadPlayer() {
         try {
             JsonReader reader = new JsonReader("./data/player.json");
@@ -82,52 +84,6 @@ public class StartScreen {
         } catch (IOException exception) { //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
             JOptionPane.showMessageDialog(null, "Oops! Error in loading player data.",
                     "Load error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    //set panel with background image
-    public static class Panel extends JPanel {
-        //https://stackoverflow.com/questions/31526190/jframe-with-background-image-and-a-jpanel?noredirect=1&lq=1
-        BufferedImage image;
-
-        public Panel() {
-            setLayout(new BorderLayout());
-            try {
-                image = ImageIO.read(new File("data/gagagacha.png")); //image made by me using paint
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        //have the size fit the background image
-        @Override
-        public Dimension getPreferredSize() {
-            //https://stackoverflow.com/questions/31526190/jframe-with-background-image-and-a-jpanel?noredirect=1&lq=1
-            return image == null ? super.getPreferredSize() : new Dimension(image.getWidth(), image.getHeight());
-        }
-
-        //draw background image
-        @Override
-        public void paintComponent(Graphics g) {
-            //https://stackoverflow.com/questions/31526190/jframe-with-background-image-and-a-jpanel?noredirect=1&lq=1
-            super.paintComponent(g);
-            g.drawImage(image, 0, 0, this);
-        }
-
-    }
-
-    public static class Gui extends JPanel {
-
-        public Gui() {
-            setOpaque(false);
-            setVisible(true);
-            CardLayout cardLayout = new CardLayout();
-            setLayout(cardLayout);
-
-            //add main menu (4 buttons) onto the frame
-            MainMenuPane mainMenuPane = new MainMenuPane();
-            add(mainMenuPane, "MainMenu");
-            cardLayout.show(this, "MainMenu");
         }
     }
 }

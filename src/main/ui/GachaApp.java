@@ -17,30 +17,55 @@ public class GachaApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    // EFFECTS: prints welcome message and intro, then asks for player's name and runs gacha application
+    // MODIFIES: this
+    // EFFECTS: prints welcome message and prompts user to create or load a player before running application
     public GachaApp() {
+        jsonWriter = new JsonWriter(JSON_STORE); // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+        jsonReader = new JsonReader(JSON_STORE); // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
         String entry;
         input = new Scanner(System.in); // https://www.w3schools.com/java/java_user_input.asp
 
-        System.out.println("Welcome to GAGAGACHA!");
-        System.out.println("\tNew players start off with 10 coins which can use to play gacha machines and earn notes!"
-                + "\n\tYou can play mini-games to earn more coins. Let's get playing!");
-        System.out.println("\nFirst, tell us your name! If you have a file of your player data, "
-                + "you can enter anything and load your data in the menu after.");
-        entry = input.next();
+        boolean keepGoing = true; // https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
-        jsonWriter = new JsonWriter(JSON_STORE); // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
-        jsonReader = new JsonReader(JSON_STORE); // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
-        runArcade(entry);
+        while (keepGoing) { // https://github.students.cs.ubc.ca/CPSC210/TellerApp
+            System.out.println("Welcome to GAGAGACHA!");
+            System.out.println("\t1 -> Create new player");
+            System.out.println("\t2 -> Load player data");
+            entry = input.next();
+            entry = entry.toLowerCase(); // https://github.students.cs.ubc.ca/CPSC210/TellerApp
+
+            if (entry.equals("1")) {
+                create();
+                keepGoing = false;
+            } else if (entry.equals("2")) {
+                load();
+                runArcade();
+                keepGoing = false;
+            } else {
+                System.out.println("Oops! Must create/load a player to play!");
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: prefaces game and tutorial then asks player to create player name to run application
+    private void create() {
+        String inputName;
+        System.out.println("\tNew players start off with 10 coins which can use to play gacha machines and "
+                + "earn notes!" + "\n\tYou can play mini-games to earn more coins. Let's get playing!");
+        System.out.println("\nEnter your player name!");
+        inputName = input.next();
+        inputName = inputName.toLowerCase();
+        player = new Player(inputName, 10);
+        runArcade();
     }
 
     // MODIFIES: this
     // EFFECTS: initializes player and processes user input prompting the menu unless player quits game
-    private void runArcade(String name) {
+    private void runArcade() {
         boolean keepGoing = true; // https://github.students.cs.ubc.ca/CPSC210/TellerApp
         String command;
-
-        player = new Player(name, 10);
 
         while (keepGoing) { // https://github.students.cs.ubc.ca/CPSC210/TellerApp
             displayMenu();
@@ -98,7 +123,6 @@ public class GachaApp {
         System.out.println("\tq -> Exit");
     }
 
-    // MODIFIES: this
     // EFFECTS: prompts user to select a gacha machine and plays it
     private void selectGacha() {
         String selection = "";
@@ -121,7 +145,6 @@ public class GachaApp {
         }
     }
 
-    // MODIFIES: this
     // EFFECTS: prompts user to select a mini-game and plays it
     private void selectGame() {
         String selection = "";
@@ -141,11 +164,12 @@ public class GachaApp {
         }
     }
 
+    // MODIFIES: player
     // EFFECTS: gets player's notebook and displays all entries of notes in it, or a message if player has no notes;
     //          prompts user to choose to remove a note, remove all notes, or return to menu
     private void displayNotebook() {
         System.out.println("\nCheck out the notes in your gacha notebook! "
-                + "Note: any replicated notes from the message machine are not repeated!");
+                + "\nNote: any replicated notes from the message machine are not repeated!");
 
         if ((player.getNotebook().size()) == 0) {
             System.out.println("\tOops! You don't have any notes right now, play gacha machines to collect notes!");
@@ -186,6 +210,7 @@ public class GachaApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: saves the player (data) to file; catching FileNotFoundException if unable to write file
     private void save() {
         try {
