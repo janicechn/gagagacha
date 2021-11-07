@@ -1,15 +1,14 @@
 package ui.gui;
 
 import persistence.JsonReader;
+import persistence.JsonWriter;
 import ui.FortuneMachine;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
+import java.io.*;
 import java.util.List;
 import java.util.Random;
 
@@ -22,31 +21,47 @@ public class MainMenuPane extends JPanel {
         setLayout(new GridBagLayout());
         setOpaque(false);
 
-        //Add button for play, view, save, load with spaces between
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
+
         JButton playButton = new JButton("Play gacha machine");
         add(playButton, gbc);
         playButton.setMnemonic(KeyEvent.VK_P);
         //play button shows dialog of random note generated from FortuneMachine and adds it to player's notebook
         playButton.addActionListener(e -> play());
 
+        notebook(gbc);
+        save(gbc);
+        load(gbc);
+    }
+
+    private void notebook(GridBagConstraints gbc) {
         JButton notebookButton = new JButton("View gacha notebook");
         add(notebookButton, gbc);
         notebookButton.setMnemonic(KeyEvent.VK_N);
-        //if player's notebook is empty, error message shows when acting on the notebook button;
-        //otherwise show notebook in a JList with a new frame and utilizing a scrolling pane;
-        //includes the two function buttons at the bottom
+        //if player's notebook is empty, error message shows, otherwise show notebook in a JList with a new frame and
+        // utilizing a scrolling pane; includes the two function buttons at the bottom
         notebookButton.addActionListener(e -> viewNotebook());
+    }
 
+    private void save(GridBagConstraints gbc) {
         JButton saveButton = new JButton("Save current player data");
         add(saveButton, gbc);
         saveButton.setMnemonic(KeyEvent.VK_S);
         //button acted on will then show dialog saying player's data is saved
-        saveButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(null, player.getName() + " data saved!"));
-
-        load(gbc);
+        saveButton.addActionListener(e -> {
+            JsonWriter jsonWriter = new JsonWriter("./data/player.json");
+            try {
+                jsonWriter.open();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Oops! Error in saving player data.",
+                        "Save error", JOptionPane.ERROR_MESSAGE);
+            }
+            jsonWriter.write(player);
+            jsonWriter.close();
+            JOptionPane.showMessageDialog(null, player.getName() + " data saved!");
+        });
     }
 
     private void load(GridBagConstraints gbc) {
@@ -56,44 +71,21 @@ public class MainMenuPane extends JPanel {
         //button acted on will then show dialog saying player's data is saved
         loadButton.addActionListener(e -> {
             try {
-                loadPlayer();
-            } catch (IOException f) {
-                //dialog of error message when invalid file load
+                JsonReader reader = new JsonReader("./data/player.json");
+                player = reader.read();
+                JOptionPane.showMessageDialog(null, player.getName() + " data loaded!");
+            } catch (IOException exception) { //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
                 JOptionPane.showMessageDialog(null, "Oops! Error in loading player data.",
                         "Load error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
 
-    private void loadPlayer() throws IOException {
-        JFileChooser fc = new JFileChooser();
-
-        int returnValue = fc.showOpenDialog(null);
-
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fc.getSelectedFile();
-        } else {
-            throw new IOException();
-        }
-
-        String filename = fc.getSelectedFile().toString();
-        //https://stackoverflow.com/questions/55568338/filechooser-how-to-show-an-error-message-while-saving-
-        // json-file-as-png-or-any
-        if (!filename.endsWith(".json")) {
-            JOptionPane.showMessageDialog(null,
-                    "Failed to load. You should load a file with a .json extension!");
-        } else {
-            JsonReader reader = new JsonReader(fc.getSelectedFile().toString());
-            reader.read();
-            JOptionPane.showMessageDialog(null, player.getName() + " data loaded!");
-        }
-    }
-
     private void play() {
         Random rand = new Random();
         List<String> fortunes = FortuneMachine.fortune;
         String message = fortunes.get(rand.nextInt(fortunes.size()));
-        ImageIcon icon = createImageIcon("https://i.ibb.co/d5QJV8T/capsule.png");
+        ImageIcon icon = new ImageIcon("data/capsule.png"); //image made by me using Paint and Paint3D
 
         player.addNotebook(message);
         JOptionPane.showMessageDialog(null,
@@ -143,31 +135,6 @@ public class MainMenuPane extends JPanel {
                 list.setSelectedIndex(index);
                 list.ensureIndexIsVisible(index);
             }
-        }
-    }
-
-    // Returns ImageIcon or null (if path invalid)
-    protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = null;
-        try {
-            imgURL = new URL(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
-
-    private void load(ActionEvent e) {
-        try {
-            loadPlayer();
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
     }
 }

@@ -31,5 +31,7 @@ pay real money! You can play fun mini-games for chances to spin!
     - As a user, I want to be able to receive a random math question, answer it, and see a result.
 - As a user, I want to be able to save my gacha notebook.
 - As a user, I want to be able to be able to load my gacha notebook from file.
-- As a user, I want to be able to delete individual notes from my gatcha notebook.
-- - As a user, I want to be able to collectively delete all notes from my gatcha notebook.
+- As a user, I want to be able to choose to either create a new player or load player data at the start.
+- As a user, I want to be able to create my player with ability to input my player name.
+- As a user, I want to be able to delete individual notes from my gacha notebook.
+- As a user, I want to be able to collectively delete all notes from my gacha notebook.

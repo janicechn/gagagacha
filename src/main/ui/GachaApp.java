@@ -179,7 +179,7 @@ public class GachaApp {
         selection = Integer.parseInt(input.next());
 
         if (selection < player.getNotebook().size() && selection > 0) {
-            player.removeNote(selection-1);
+            player.removeNote(selection - 1);
             System.out.println("Note " + selection + " has been removed.");
         } else {
             System.out.println("Invalid entry number.");

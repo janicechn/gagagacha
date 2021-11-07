@@ -7,10 +7,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
 
 public class StartScreen {
     //https://stackoverflow.com/questions/22162398/how-to-set-a-background-picture-in-jpanel
@@ -50,14 +48,8 @@ public class StartScreen {
                 createPlayerPrompt(frame);
                 keepGoingHere = false;
             } else if (result == JOptionPane.NO_OPTION) {
-                try {
-                    loadPlayer();
-                } catch (IOException e) {
-                    //dialog of error message when invalid file load
-                    JOptionPane.showMessageDialog(frame, "Oops! Error in loading player data.",
-                            "Load error", JOptionPane.ERROR_MESSAGE);
-                    keepGoingHere = false;
-                }
+                loadPlayer();
+                keepGoingHere = false;
             } else {
                 System.exit(2);
             }
@@ -81,28 +73,15 @@ public class StartScreen {
         }
     }
 
-    private void loadPlayer() throws IOException {
-        JFileChooser fc = new JFileChooser();
-
-        int returnValue = fc.showOpenDialog(null);
-
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fc.getSelectedFile();
-            //https://mkyong.com/swing/java-swing-jfilechooser-example/
-            selectedFile.getAbsolutePath();
-        } else {
-            throw new IOException();
-        }
-
-        String filename = fc.getSelectedFile().toString();
-        //https://stackoverflow.com/questions/55568338/filechooser-how-to-show-an-error-message-while-saving-
-        // json-file-as-png-or-any
-        if (!filename.endsWith(".json")) {
-            JOptionPane.showMessageDialog(null,
-                    "Failed to load. You should load a file with a .json extension!");
-        } else {
-            JsonReader reader = new JsonReader(fc.getSelectedFile().toString());
-            reader.read();
+    private void loadPlayer() {
+        try {
+            JsonReader reader = new JsonReader("./data/player.json");
+            player = reader.read();
+            JOptionPane.showMessageDialog(null, player.getName() + " data loaded!");
+            keepGoing = false;
+        } catch (IOException exception) { //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+            JOptionPane.showMessageDialog(null, "Oops! Error in loading player data.",
+                    "Load error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -114,8 +93,7 @@ public class StartScreen {
         public Panel() {
             setLayout(new BorderLayout());
             try {
-                //image drawn by me, uploaded using https://imgbb.com/
-                image = ImageIO.read(new URL("https://i.ibb.co/31dnR7d/gagagacha.png"));
+                image = ImageIO.read(new File("data/gagagacha.png")); //image made by me using paint
             } catch (IOException e) {
                 e.printStackTrace();
             }
