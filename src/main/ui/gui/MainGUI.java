@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 // Runs the gui of game with the fitting look and feel
-public class Main {
+public class MainGUI {
     public static void main(String[] args) {
         //https://stackoverflow.com/questions/31526190/jframe-with-background-image-and-a-jpanel?noredirect=1&lq=1
         EventQueue.invokeLater(() -> {
