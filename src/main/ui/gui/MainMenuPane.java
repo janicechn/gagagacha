@@ -2,7 +2,9 @@ package ui.gui;
 
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.AdviceMachine;
 import ui.FortuneMachine;
+import ui.MessageMachine;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,18 +84,45 @@ public class MainMenuPane extends JPanel {
         });
     }
 
-    // EFFECTS: shows dialog of random note generated from FortuneMachine and adds it to player's notebook
+    // EFFECTS: prompts player to choose a machine to play and plays that machine
     private void play() {
+        Object[] options = { "Advice", "Fortune", "Message"};
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("Choose which gacha machine type you want to play!"));
+        int result = JOptionPane.showOptionDialog(null, panel, "Gacha machines!",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options, null);
+        if (result == JOptionPane.YES_OPTION) {
+            playMachine(AdviceMachine.advice);
+        }
+        if (result == JOptionPane.NO_OPTION) {
+            playMachine(FortuneMachine.fortune);
+        }
+        if (result == JOptionPane.CANCEL_OPTION) {
+            playMachine(MessageMachine.message);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: gets random note based on machine and presents it, adding to player's notebook if it is not a repeated
+    //          note from the message machine
+    private void playMachine(List<String> notes) {
         Random rand = new Random();
-        List<String> fortunes = FortuneMachine.fortune;
-        String message = fortunes.get(rand.nextInt(fortunes.size()));
+        String note = notes.get(rand.nextInt(notes.size()));
         ImageIcon icon = new ImageIcon("data/capsule.png"); //image made by me using Paint and Paint3D
 
-        player.addNotebook(message);
-        JOptionPane.showMessageDialog(null,
-                "You won a message!\n\n\t" + "\"" + message + "\""
-                        + "\n\nYour message was added to your notebook.", "Gacha Capsule",
-                JOptionPane.INFORMATION_MESSAGE, icon);
+        if (notes == MessageMachine.message && player.getNotebook().contains(note)) {
+            JOptionPane.showMessageDialog(null,
+                    "You won a message!\n\n\t" + "\"" + note + "\""
+                            + "\n\nYou already collected this message, so it's not added to your notebook.",
+                    "Gacha Capsule", JOptionPane.INFORMATION_MESSAGE, icon);
+        } else {
+            player.addNotebook(note);
+            JOptionPane.showMessageDialog(null,
+                    "You won a note!\n\n\t" + "\"" + note + "\""
+                            + "\n\nYour note was added to your notebook.", "Gacha Capsule",
+                    JOptionPane.INFORMATION_MESSAGE, icon);
+        }
     }
 
     // EFFECTS: if player's notebook is empty, error message shows; otherwise show notebook in a dialog pane with
