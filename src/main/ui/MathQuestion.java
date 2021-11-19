@@ -9,10 +9,10 @@ import java.util.*;
  * the player guesses correctly, they earn coins.
  */
 public class MathQuestion {
-    private static final List<String> list;    // List of operations the math question can generate
+    public static final List<String> operations;    // List of operations the math question can generate
 
     static {
-        list = Collections.unmodifiableList(
+        operations = Collections.unmodifiableList(
                 new ArrayList<String>() {{
                     add("Addition");
                     add("Subtraction");
@@ -44,7 +44,7 @@ public class MathQuestion {
     public void question() {
         Random rand = new Random();
         // https://www.geeksforgeeks.org/randomly-select-items-from-a-list-in-java/
-        String operation = list.get(rand.nextInt(list.size()));
+        String operation = operations.get(rand.nextInt(operations.size()));
 
         if (operation.equals("Addition")) {
             addition();
