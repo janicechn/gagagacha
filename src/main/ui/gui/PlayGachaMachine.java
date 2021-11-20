@@ -44,7 +44,7 @@ public class PlayGachaMachine {
             }
         }
         if (result == JOptionPane.CANCEL_OPTION) {
-            if (player.getBalance() < AdviceMachine.COST_TO_PLAY) {
+            if (player.getBalance() < MessageMachine.COST_TO_PLAY) {
                 insufficientCoins();
             } else {
                 playMachine(MessageMachine.message, MessageMachine.COST_TO_PLAY);
