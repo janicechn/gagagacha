@@ -80,6 +80,7 @@ public class GachaApp {
         }
 
         System.out.println("\nThanks for playing! Goodbye!");
+        player.playerEventLog(EventLog.getInstance());
     }
 
     // MODIFIES: this

@@ -12,6 +12,7 @@ public class Player implements Writable {
     private String name;                  // the player's name
     private List<String> notebook;        // the player's collection
     private int balance;                  // the current coin balance of the player
+    private EventLog eventLog;            // event log of player's events
 
     /*
      * EFFECTS: notebook is initially an empty list;
@@ -22,6 +23,7 @@ public class Player implements Writable {
         this.name = name;
         notebook = new ArrayList<>();
         balance = initialBalance;
+        eventLog = eventLog.getInstance();
     }
 
     // EFFECTS: returns player's name
@@ -54,15 +56,21 @@ public class Player implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: removes a note entry in the player's notebook at position i
+    // EFFECTS: removes a note entry in the player's notebook at position i and records event of it
     public void removeNote(int i) {
         notebook.remove(i);
+
+        Event removeNoteEvent = new Event("note at index i is removed from notebook list");
+        eventLog.logEvent(removeNoteEvent);
     }
 
     // MODIFIES: this
-    // EFFECTS: removes all note entries in the player's notebook
+    // EFFECTS: removes all note entries in the player's notebook and records event of it
     public void removeAllNotes() {
         notebook = new ArrayList<>();
+
+        Event removeAllNotesEvent = new Event("notebook list is cleared with no notes in the list left");
+        eventLog.logEvent(removeAllNotesEvent);
     }
 
     // MODIFIES: this
@@ -98,5 +106,12 @@ public class Player implements Writable {
         }
 
         return jsonArray; //https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+    }
+
+    // EFFECTS: prints events in player's event log
+    public void playerEventLog(EventLog el) {
+        for (Event next : el) { //https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git
+            System.out.println(next.toString() + "\n");
+        }
     }
 }

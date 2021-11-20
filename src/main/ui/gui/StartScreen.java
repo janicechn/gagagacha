@@ -1,5 +1,6 @@
 package ui.gui;
 
+import model.EventLog;
 import model.Player;
 import persistence.JsonReader;
 import java.io.IOException;
@@ -20,7 +21,14 @@ public class StartScreen {
         frame = new JFrame("GAGAGACHA");
         //https://stackoverflow.com/questions/31526190/jframe-with-background-image-and-a-jpanel?noredirect=1&lq=1
         frame.setContentPane(background);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //https://stackoverflow.com/questions/9093448/how-to-capture-a-jframes-close-button-click-event
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                player.playerEventLog(EventLog.getInstance());
+                System.exit(0);
+            }
+        });
         frame.pack();
         frame.add(new MainMenu());
         frame.setLocationRelativeTo(null); // open in center of screen

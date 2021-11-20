@@ -1,5 +1,7 @@
 package ui.gui;
 
+import model.EventLog;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.logging.Level;

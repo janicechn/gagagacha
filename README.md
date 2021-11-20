@@ -35,3 +35,10 @@ pay real money! You can play fun mini-games for chances to spin!
 - As a user, I want to be able to create my player with ability to input my player name.
 - As a user, I want to be able to delete individual notes from my gacha notebook.
 - As a user, I want to be able to collectively delete all notes from my gacha notebook.
+
+## Phase 4: Task 2
+Fri Nov 19 19:57:53 PST 2021
+note at index i is removed from notebook list
+
+Fri Nov 19 19:58:04 PST 2021
+notebook list is cleared with no notes in the list left
