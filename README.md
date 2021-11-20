@@ -42,3 +42,7 @@ note at index i is removed from notebook list
 
 Fri Nov 19 19:58:04 PST 2021
 notebook list is cleared with no notes in the list left
+
+## Phase 4: Task 3
+- Refactor to make one main menu class
+- Connect classes more having MiniGame abstract and CoinFlip and MathQuestion as subclasses
